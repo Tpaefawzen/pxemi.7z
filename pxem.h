@@ -9,8 +9,6 @@
 #include <stdlib.h>
 #include <math.h>
 
-using namespace std;
-
 class Pxem{
 	private:
 		std::stack<int>	pStack;		// stack
