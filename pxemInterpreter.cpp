@@ -4,7 +4,7 @@
 #include "pxem.h"
 
 int main(int argc,char **argv){
-	if ( argc == 0 ) {
+	if ( argc < 2 ) {
 		std::cerr << "Usage: " << argv[0] << " FILE" << std::endl;
 		return 1;
 	}
@@ -16,13 +16,15 @@ int main(int argc,char **argv){
 
 	if ( !fR.is_open() ) {
 		std::cerr << "FileOpenError: " << fileName << std::endl;
-		goto Run;
+		goto GetBasename;
 	}
 
 	char c;
 	while(fR.get(c))
 		fileContents += c;
 	fR.close();
+
+GetBasename:
 	if(fileName.rfind('/') == std::string::npos)
 		if(fileName.rfind('\\') != std::string::npos)
 			fileName2 = fileName.substr(1+(int)fileName.rfind('\\'));
@@ -31,7 +33,6 @@ int main(int argc,char **argv){
 	else
 		fileName2 = fileName.substr(1+(int)fileName.rfind('/'));
 
-Run:
 	Pxem pxemi((char*)fileName2.c_str(),(char*)fileContents.c_str());
 	pxemi.run();
 }
