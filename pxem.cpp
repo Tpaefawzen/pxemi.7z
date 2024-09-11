@@ -15,7 +15,7 @@ Pxem::Pxem(char *f, char *g):fName(f),fCont(g){
 	srand((unsigned)time(NULL));
 }
 Pxem::Pxem(char *f, char *g,stack<int> hoge):fName(f),fCont(g){
-	srand((unsigned)time(NULL));
+	// srand((unsigned)time(NULL));
 	stack<int> fuga;
 	while(!hoge.empty()){
 		fuga.push((int)hoge.top());
@@ -364,7 +364,7 @@ inline void Pxem::numOut(){
 	pStack.pop();
 }
 inline void Pxem::input(){
-	int aaa = getchar();
+	int aaa = getchar(); /* OR -1 */
 	pStack.push(aaa);
 }
 inline void Pxem::numInput(){
@@ -373,6 +373,9 @@ inline void Pxem::numInput(){
 	pStack.push(aaa);
 }
 inline void Pxem::copy(){
+	if ( pstack.empty() ) {
+		throw std::RuntimeError{"Attempted to .c to empty stack"};
+	}
 	int i = pStack.top();
 	pStack.push(i);
 }
@@ -409,6 +412,9 @@ void Pxem::emu(){
 	}
 }
 inline void Pxem::getRand(){
+	if ( pStack.empty() ) {
+		throw std::RuntimeError{"Attempted to .r to empty stack"};
+	}
 	int aaa = rand() % pStack.top();
 	pStack.pop();
 	pStack.push(aaa);
